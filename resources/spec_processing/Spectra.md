@@ -252,8 +252,8 @@ caldir=./
 
 ```bash
 epar sensfunc 
-input=std.fits  
-output=sens
+standard=std.fits  
+sensitiv=sens
 ```
 
 Теперь переведем стандартный спектр в абсолютные потоки:
@@ -262,5 +262,5 @@ output=sens
 epar calibrate 
 input=bd+25d4655_end.fits 
 output=bd_flux.fits
-sensitivity=sens.0001.fits
+sensiti=sens.0001.fits
 ```
