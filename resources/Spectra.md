@@ -1,3 +1,11 @@
+---
+title: "Spectra Reprocessing"
+author: "uskovgs"
+output:
+  html_document:
+    keep_md: true
+---
+
 ## Обработка оптических спектров на примере РТТ-150/TFOSC на сервере hea134
 
 Создание краткой сводки по всем файлам
