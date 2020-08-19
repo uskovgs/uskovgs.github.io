@@ -3,6 +3,4 @@
 [My Github](https://github.com/uskovgs/)
 
 
-[Spectra](resources/Spectra.md)
-
-![](resources/img.png)
+[Optical spec processing](resources/spec_processing/Spectra.md)
