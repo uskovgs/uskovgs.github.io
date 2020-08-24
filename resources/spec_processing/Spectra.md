@@ -110,7 +110,7 @@ combine=average
 В IRAF twodspec.longslit 
 
 ```bash
-epar longslit
+epar response
 calibrat=halogen
 normaliz=halogen
 response=nhalogen
@@ -157,12 +157,16 @@ referenc=fear
 images=fear
 ```
 
-
-
 ```bash
 epar fitcoords
 images=fear
 ```
+
+Удаляем плохие точки клавишами `d` `p`
+
+`y` `y` `r`
+
+`y``r``r`
 
 ![](fitcoords.png)
 
