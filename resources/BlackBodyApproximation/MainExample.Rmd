@@ -1,0 +1,76 @@
+---
+title: "BlackBody approximation"
+date: "`r Sys.Date()`"
+output: 
+  html_document: 
+    highlight: pygments
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+Пример аппроксимации спектра Веги blackbody с помощью функции `nls`. 
+
+# Подготовка данных
+
+```{r}
+vega <- Rfits::Rfits_read_table('/Users/uskov/cdbs/grp/hst/cdbs/calspec/alpha_lyr_004.fits')
+knitr::kable(head(vega, 5), digits = 19)
+plot(vega$WAVELENGTH, vega$FLUX)
+```
+
+По графику видно, что на длинах волн 1500--4500 спектр не будет описываться степенной моделью, поэтому исключим данные точки. Сразу создадим новый столбец длин волн в сантиметрах.
+
+```{r}
+v <- vega %>% 
+  dplyr::mutate(wave = WAVELENGTH * 1e-8) %>% 
+  dplyr::filter(WAVELENGTH > 4500 | WAVELENGTH < 1500)
+plot(v$wave, v$FLUX)
+```
+
+# Аппроксимация
+
+Формула [BlackBody](http://burro.cwru.edu/Academics/Astr221/Light/blackbody.html)
+
+
+```{r}
+bb <- function(lambda, temperature){
+  h <- 6.626e-27
+  k <- 1.38e-16
+  c <- 3e10
+  (2*h*c^2 / lambda^5) / (exp(h*c/lambda/k/temperature) - 1)
+}
+
+y <- v$FLUX
+x <- v$wave
+fit <- nls(y ~ a * bb(x, t), start = list(a = 1, t = 1e5))
+summary(fit)
+```
+
+
+Температура T = `r fit$m$getPars()[2]`, а коэффициент нормировки norm = `r fit$m$getPars()[1]`
+
+Аналогично можно построить график с помощью `ggplot2` и там же аппроксимировать
+```{r}
+
+max_flux_wave <- 2.89e-3/fit$m$getPars()[2] * 100
+Teff <- round(fit$m$getPars()[2], 0)
+v %>% 
+  ggplot(aes(wave, FLUX)) +
+  stat_smooth(method = 'nls', se = F, method.args = list(start = list(a=1, t = 1e5)),
+              formula = y ~ a * bb(x, t)) +
+  geom_point() +
+  geom_vline(aes(xintercept = max_flux_wave)) +
+  annotate(geom = "text", 
+           label = glue::glue("Teff = {Teff} K"),
+           x = 4e-5, 
+           y = 1.2e-8) +
+  theme_bw() +
+  xlab('wavelength, cm') + 
+  ylab('Flux, ergs/s/cm^2')
+```
+
+

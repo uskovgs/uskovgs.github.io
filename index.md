@@ -5,6 +5,8 @@
 
 [Optical spec processing](resources/spec_processing/Spectra.md)
 
+[BlackBody fitting](resources/BlackBodyApproximation/MainExample.md)
+
 [Computational Astronomy](https://github.com/hwborchers/zaRastro)
 
 [Count Bayesie](https://www.countbayesie.com/)
