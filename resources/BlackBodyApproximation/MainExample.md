@@ -1,17 +1,6 @@
----
-title: "BlackBody approximation"
-date: "2020-10-29"
-output: 
-  html_document: 
-    highlight: pygments
-    keep_md: yes
----
+# Аппроксимации спектра Веги blackbody с помощью функции `nls`. 
 
-
-
-Пример аппроксимации спектра Веги blackbody с помощью функции `nls`. 
-
-# Подготовка данных
+### Подготовка данных
 
 
 ```r
@@ -47,7 +36,7 @@ plot(v$wave, v$FLUX)
 
 ![](MainExample_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
-# Аппроксимация
+### Аппроксимация
 
 Формула [BlackBody](http://burro.cwru.edu/Academics/Astr221/Light/blackbody.html)
 
