@@ -17,7 +17,7 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-
+knitr::opts_knit$set(root.dir = "/Users/uskov/RProjects/Papers/17-sources/KMU-presentation/")
 # xaringanExtra::use_fit_screen()
 
 ```
