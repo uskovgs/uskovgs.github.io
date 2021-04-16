@@ -170,6 +170,11 @@ thead, tfoot, tr:nth-child(even) { background: #eee }
   display: none;
 }
 
+.caption {
+  font-size: 0.8em;
+  text-align: justify
+}
+
 
 
 
