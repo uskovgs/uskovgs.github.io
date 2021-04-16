@@ -56,8 +56,10 @@ class: left
 
 * В 1963г. Мартин Шмидт на оптическом спектре заметил закономерность $\lambda=1.16~\lambda_0$
 
-<img src="images/3C273.gif" width = 300>
-<p class='caption'> Источник: isdc.unige.ch/3c273 </p>
+
+```{r, echo=FALSE, out.width="300", fig.cap='Источник: isdc.unige.ch/3c273'}
+knitr::include_graphics('images/3c273.jpg')
+```
 
 
 ]
