@@ -13,4 +13,4 @@
 
 [Statistics, Data, Science](https://m-clark.github.io/)
 
-[PanSTARRS R API](https://github.com/uskovgs/PanSTARRS)
+[PanSTARRS R API](https://uskovgs.github.io/PanSTARRS/)
