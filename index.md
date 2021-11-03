@@ -12,3 +12,5 @@
 [Count Bayesie](https://www.countbayesie.com/)
 
 [Statistics, Data, Science](https://m-clark.github.io/)
+
+[PanSTARRS](https://github.com/uskovgs/PanSTARRS/blob/main/docs/index.html)
