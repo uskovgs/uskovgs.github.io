@@ -2,16 +2,93 @@
   {
     "objectID": "posts/spec_processing/Spectra.html",
     "href": "posts/spec_processing/Spectra.html",
-    "title": "Обработка оптических спектров на примере РТТ-150/TFOSC на сервере",
+    "title": "IRAF: Обработка оптических спектров",
     "section": "",
-    "text": "makelog\nСоздадим папку с названием нашей звезды стандарта и скопируем туда спектры данной звезды и файлы ламп FeAr и Halogen\nmkdir BD+25d4655\ncp `cat .log | grep 20200721 | grep '1024 200' | grep BD+25d4655 | awk '{print$3}'` BD+25d4655/\n\nУсредненный bias\nСоздадим папку со спектральными bias и скопируем их туда\nmkdir biassp\ncp `cat .log | grep '1024 200' | grep bias | grep 0.0000 | grep -v flat | awk '{print$3}'` biassp/\nПроверим bias перед усреднением.\ncd biassp/\nls *.fit > biassp.list\ngedit biassp.list & # для удаления \"плохих\" bias из списка\nds9 &\nxs `cat biassp.list`\nПеред тем как делать усреднение нужно исправить ключи в FITS Header к bias, так как у нас не записан правильный GAIN. Для этого выполним команду\n../bin/repair_tfosc_andor_keys *.fit\nУсредним файлы bias по медиане. Для этого небходимо в IRAF открыть noao.imred.ccdred\u0012\u0012\nepar zerocombine\ninput=@biassp.list\noutput=Biassp2.fits\ncombine=median\nВвести команду:go\nСкопируем Biassp2.fits в папку ../Caldata\ncp Biassp2.fits ../Caldata/\nПерейдем в папку BD+25d4655 и исправвим ключи\n../bin/repair_tfosc_andor_keys *.fit\nСоздадим списки:\n* спектров звезды spec.list \n* спектров лампы **FeAr** fear.list\n* спектров лампы **Halogen** halogen.list\ncat .log | grep 100.0 | awk '{print$3}' > spec.list\ncat .log | grep Fe-Ar | awk '{print$3}' > fear.list\ncat .log | grep Halogen | awk '{print$3}' > halogen.list\nВычтем из всх спектров усредненный bias\n../bin/process *.fit | si\n\n\nУсреднение Halogen\nВ IRAF открываем noao.imred.ccdred\nepar combine\ninput=@halogen.list\noutput=halogen\ncombine=average\nЗапускаем :go\n\n\nУсреднение FeAr\nВ IRAF открываем noao.imred.ccdred\nepar combine\ninput=@fear.list\noutput=fear\ncombine=average\n\n\nСоздание функции отклика\nВ IRAF twodspec.longslit\nepar response\ncalibrat=halogen\nnormaliz=halogen\nresponse=nhalogen\nЗапускаем :go\n\n\nДеление спектра звезд на плоское поле\nВ IRAF imred.ccdred\nepar ccdproc\nimages=@spec.list\nflatcor=yes\nflat=nhalogen.fits\nЗапускаем :go\n\n\nПостроение дисперсионной кривой\nIRAF twodspec.longslit\nepar identify\nimages=fear.fits\nsection=middle line\ncoordli=linelists$idhenear.dat\ncradius=8\n\nepar reidentify\ncradius=8\ncoordli=linelists$idhenear.dat\nreferenc=fear\nimages=fear\nepar fitcoords\nimages=fear\nУдаляем плохие точки клавишами d p\ny y r\ny``r``r\n\nВсё замечательно вписалось\n\n\nПривязка спектра звезды по длинам волн\nТрансформируем спектры по найденному в fitcoords решении\nepar transform\ninput=@spec.list\noutput=tr//@spec.list\nfitnames=fear\nЗапускаем :go\n\nВ папке database два файла fcfear, idfear, хотя fitnames=fear\n\n\n\nОчистка от космиков\n ~uskov/runTmp/do_cleancrspec trfosc025*.fit\n\n\nСовмещение спектров звезды для дальнейшего суммирования\nIRAF в пакете iki команда alignspectra\nepar alignspec\nimages=tr//@spec.list\nrefimage=trfosc0254.fit\nprefix=rg\nimreg=[160:670,85:145] # указываем бокс, по которому он будет совмещать спектры для дальнейшего складывания\n\n\nКомбинирование совмещенных спектров\nВ IRAF пакет imred.ccdred команда combine\ncombine input=rgtr//@spec.list output=bd+25d4655.fits\n\n\nЭкстракция спектра\nВ IRAF пакет twodspec.apextract команда apall\napall input=bd+25d4655.fits output=bd+25d4655_end.fits\nКлавиши управления\n\nm создать новую апертуру и центрировать\nd удалить апертуру\nl установить левую границу апертуры\nu установить правую границу апертуры\nb перейти в режим выбора фона.\n\nz удаляет область фона\ns установить левую границу области, а потом правую\nq выйти из режима фона\n\n:o 3 изменить порядок аппроксимации фона\nf аппроксимировать фон заново\n\nВ итоге получим изображение спектра звезды\n\n\n\nПеревод отсчетов в абсолютные потоки\nПосле этого нужно создать файл стандарта звезды std.fits в пакете noao.onedspec\nepar standard\ninput=bd+25d4655_end.fits \noutput=std.fits \nstar=mbd25d4655\ncaldir=./\nУчет DQE и поглощения:\nepar sensfunc \nstandard=std.fits  \nsensitiv=sens\nТеперь переведем стандартный спектр в абсолютные потоки:\nepar calibrate \ninput=bd+25d4655_end.fits \noutput=bd_flux.fits\nsensiti=sens.0001.fits"
+    "text": "Создание краткой сводки по всем файлам\nmakelog\nСоздадим папку с названием нашей звезды стандарта и скопируем туда спектры данной звезды и файлы ламп FeAr и Halogen\nmkdir BD+25d4655\ncp `cat .log | grep 20200721 | grep '1024 200' | grep BD+25d4655 | awk '{print$3}'` BD+25d4655/\nСоздадим списки:\n* спектров звезды spec.list \n* спектров лампы **FeAr** fear.list\n* спектров лампы **Halogen** halogen.list\ncat .log | grep 100.0 | awk '{print$3}' > spec.list\ncat .log | grep Fe-Ar | awk '{print$3}' > fear.list\ncat .log | grep Halogen | awk '{print$3}' > halogen.list"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#усреднение-bias",
+    "href": "posts/spec_processing/Spectra.html#усреднение-bias",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.1 Усреднение bias",
+    "text": "2.1 Усреднение bias\nСоздадим папку со спектральными bias и скопируем их туда\nmkdir biassp\ncp `cat .log | grep '1024 200' | grep bias | grep 0.0000 | grep -v flat | awk '{print$3}'` biassp/\nПроверим bias перед усреднением.\ncd biassp/\nls *.fit > biassp.list\ngedit biassp.list & # для удаления \"плохих\" bias из списка\nds9 &\nxs `cat biassp.list`\nПеред тем как делать усреднение нужно исправить ключи в FITS Header к bias, так как у нас не записан правильный GAIN. Для этого выполним команду\n../bin/repair_tfosc_andor_keys *.fit\nУсредним файлы bias по медиане. Для этого небходимо в IRAF открыть noao.imred.ccdred\u0012\u0012\nepar zerocombine\ninput=@biassp.list\noutput=Biassp2.fits\ncombine=median\nВвести команду:go\nСкопируем Biassp2.fits в папку ../Caldata\ncp Biassp2.fits ../Caldata/\nПерейдем в папку BD+25d4655 и исправвим ключи\n../bin/repair_tfosc_andor_keys *.fit"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#вычитание-усредненного-bias",
+    "href": "posts/spec_processing/Spectra.html#вычитание-усредненного-bias",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.2 Вычитание усредненного bias",
+    "text": "2.2 Вычитание усредненного bias\nВычтем из всх спектров усредненный bias\n../bin/process *.fit | si"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#усреднение-кадров-плоского-поля",
+    "href": "posts/spec_processing/Spectra.html#усреднение-кадров-плоского-поля",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.3 Усреднение кадров плоского поля",
+    "text": "2.3 Усреднение кадров плоского поля\nВ IRAF открываем noao.imred.ccdred\nepar combine\ninput=@halogen.list\noutput=halogen\ncombine=average\nЗапускаем :go"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#усреднение-кадров-fear-спектров",
+    "href": "posts/spec_processing/Spectra.html#усреднение-кадров-fear-спектров",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.4 Усреднение кадров FeAr спектров",
+    "text": "2.4 Усреднение кадров FeAr спектров\nВ IRAF открываем noao.imred.ccdred\nepar combine\ninput=@fear.list\noutput=fear\ncombine=average"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#создание-функции-отклика",
+    "href": "posts/spec_processing/Spectra.html#создание-функции-отклика",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.5 Создание функции отклика",
+    "text": "2.5 Создание функции отклика\nВ IRAF twodspec.longslit\nepar response\ncalibrat=halogen\nnormaliz=halogen\nresponse=nhalogen\nЗапускаем :go"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#деление-спектра-звезд-на-плоское-поле",
+    "href": "posts/spec_processing/Spectra.html#деление-спектра-звезд-на-плоское-поле",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.6 Деление спектра звезд на плоское поле",
+    "text": "2.6 Деление спектра звезд на плоское поле\nВ IRAF imred.ccdred\nepar ccdproc\nimages=@spec.list\nflatcor=yes\nflat=nhalogen.fits\nЗапускаем :go"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#построение-дисперсионной-кривой",
+    "href": "posts/spec_processing/Spectra.html#построение-дисперсионной-кривой",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.7 Построение дисперсионной кривой",
+    "text": "2.7 Построение дисперсионной кривой\nIRAF twodspec.longslit\nepar identify\nimages=fear.fits\nsection=middle line\ncoordli=linelists$idhenear.dat\ncradius=8\n\nepar reidentify\ncradius=8\ncoordli=linelists$idhenear.dat\nreferenc=fear\nimages=fear\nepar fitcoords\nimages=fear\nУдаляем плохие точки клавишами d p\ny y r\ny``r``r\n\nВсё замечательно вписалось"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#привязка-спектра-звезды-по-длинам-волн",
+    "href": "posts/spec_processing/Spectra.html#привязка-спектра-звезды-по-длинам-волн",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.8 Привязка спектра звезды по длинам волн",
+    "text": "2.8 Привязка спектра звезды по длинам волн\nТрансформируем спектры по найденному в fitcoords решении\nepar transform\ninput=@spec.list\noutput=tr//@spec.list\nfitnames=fear\nЗапускаем :go\n\nВ папке database два файла fcfear, idfear, хотя fitnames=fear"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#очистка-от-космиков",
+    "href": "posts/spec_processing/Spectra.html#очистка-от-космиков",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.9 Очистка от космиков",
+    "text": "2.9 Очистка от космиков\n ~uskov/runTmp/do_cleancrspec trfosc025*.fit"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#совмещение-спектров-звезды-для-дальнейшего-суммирования",
+    "href": "posts/spec_processing/Spectra.html#совмещение-спектров-звезды-для-дальнейшего-суммирования",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.10 Совмещение спектров звезды для дальнейшего суммирования",
+    "text": "2.10 Совмещение спектров звезды для дальнейшего суммирования\nIRAF в пакете iki команда alignspectra\nepar alignspec\nimages=tr//@spec.list\nrefimage=trfosc0254.fit\nprefix=rg\nimreg=[160:670,85:145] # указываем бокс, по которому он будет совмещать спектры для дальнейшего складывания"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#комбинирование-совмещенных-спектров",
+    "href": "posts/spec_processing/Spectra.html#комбинирование-совмещенных-спектров",
+    "title": "IRAF: Обработка оптических спектров",
+    "section": "2.11 Комбинирование совмещенных спектров",
+    "text": "2.11 Комбинирование совмещенных спектров\nВ IRAF пакет imred.ccdred команда combine\ncombine input=rgtr//@spec.list output=bd+25d4655.fits"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "uskovgs.github.io",
+    "title": "Posts",
     "section": "",
-    "text": "iraf\n\n\nunix\n\n\n\n\n\n\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\n\nNo matching items"
+    "text": "astronomy\n\n\niraf\n\n\nunix\n\n\n\n\nНа примере данных с телескопа РТТ-150 обсерватории TUBITAK\n\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",

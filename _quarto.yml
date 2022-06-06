@@ -3,16 +3,22 @@ project:
   output-dir: docs
 
 website:
-  title: "uskovgs.github.io"
+  title: "Posts"
   navbar:
     right:
-      - about.qmd
       - icon: github
         href: https://github.com/uskovgs
+      - icon: envelope
+        href: mailto:uskov.russia@gmail.com
+        
+        
+      
       
 format:
   html:
-    theme: flatly
+    theme: 
+      light: flatly
+      dark: darkly
     css: styles.css
 
 
