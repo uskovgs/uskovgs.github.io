@@ -2,7 +2,7 @@
 .Rhistory
 .Rapp.history
 .Rproj
-*.html
+#*.html
 output/
 resources/
 .DS_Store
