@@ -7,6 +7,8 @@ output/
 resources/
 .DS_Store
 *.Rproj
+.quarto
+uskovgs.github.io.Rproj
 
 # Session Data files
 .RData
@@ -44,3 +46,5 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+/.quarto/
