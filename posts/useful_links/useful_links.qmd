@@ -15,39 +15,29 @@ description: "Список материалов"
 # Astronomy/astrostat
 
 -   [Computational Astronomy](https://github.com/hwborchers/zaRastro)
-
 -   [Bayesian Models for Astrophysical Data: Using R, JAGS, Python, and Stan](https://www.bayesianmodelsforastrophysicaldata.com/)
-
 -   [Modern Statistical Methods for Astronomy: With R Applications](https://ned.ipac.caltech.edu/level5/Sept19/Feigelson/paper.pdf)
-
 -   [Extragalactic Astronomy and Cosmology](https://link.springer.com/book/10.1007/978-3-642-54083-7)
 
 
 # Summer Schools / Workshops
 
 -   [PSU Center for Astrostatistics](https://sites.psu.edu/astrostatistics)
-
 -   [Astrophysics Data Analysis Workshops](https://www.imperial.ac.uk/astrophysics/centre-for-inference-and-cosmology/seminars-and-events/data-analysis-workshops/)
 
 
 # Statistics
 
 -   [An Introduction to Statistical Learning](https://www.statlearning.com)
-
 -   [Просто о статистике (с использованием R)](https://online.spbu.ru/prosto-o-statistike-s-ispolzovaniem-r/)
-
 -   [Regression and Other Stories](https://users.aalto.fi/~ave/ROS.pdf) by Andrew Gelman, Jennifer Hill, and Aki Vehtari
-
 -   [Beyond Multiple Linear Regression](https://bookdown.org/roback/bookdown-BeyondMLR)
-
 -   [Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book) by Andrew Gelman, John Carlin, Hal Stern, David Dunson, Aki Vehtari, and Donald Rubin.
-
 -   [Bayesian Data Analysis course](https://avehtari.github.io/BDA_course_Aalto) at by Aki Vehtari
 
 # Data Visualization
 
 -   [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) by Claus O. Wilke
-
 -   [Designing ggplots: making clear figures that communicate](https://designing-ggplots.netlify.app)
 
 # R programming
@@ -61,9 +51,7 @@ description: "Список материалов"
 # Python
 
 -   [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
-
 -   [Python for Data Analysis](https://wesmckinney.com/book/) by Wes McKinney (created **pandas**)
-
 -   [The Good Research Code Handbook](https://goodresearch.dev/)
 
 
@@ -80,8 +68,7 @@ description: "Список материалов"
 ## Regular expressions
 
 -   [RegexOne. Learn Regular Expressions with simple, interactive exercises](https://regexone.com/)
-
--   <https://regex101.com/>
+-   [regex101](https://regex101.com)
 
 ## Ah
 
