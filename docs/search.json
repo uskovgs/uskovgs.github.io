@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "posts/useful_links/useful_links.html",
+    "href": "posts/useful_links/useful_links.html",
+    "title": "Полезные ссылки",
+    "section": "",
+    "text": "Computational Astronomy\nBayesian Models for Astrophysical Data: Using R, JAGS, Python, and Stan\nModern Statistical Methods for Astronomy: With R Applications\nExtragalactic Astronomy and Cosmology"
+  },
+  {
+    "objectID": "posts/useful_links/useful_links.html#stories",
+    "href": "posts/useful_links/useful_links.html#stories",
+    "title": "Полезные ссылки",
+    "section": "Stories",
+    "text": "Stories\n\nUsing AWK and R to parse 25tb"
+  },
+  {
+    "objectID": "posts/useful_links/useful_links.html#regular-expressions",
+    "href": "posts/useful_links/useful_links.html#regular-expressions",
+    "title": "Полезные ссылки",
+    "section": "Regular expressions",
+    "text": "Regular expressions\n\nRegexOne. Learn Regular Expressions with simple, interactive exercises\nhttps://regex101.com/"
+  },
+  {
+    "objectID": "posts/useful_links/useful_links.html#ah",
+    "href": "posts/useful_links/useful_links.html#ah",
+    "title": "Полезные ссылки",
+    "section": "Ah",
+    "text": "Ah\n\nFebruary 2022: “Top 40” New CRAN Packages my package panstarrs."
+  },
+  {
     "objectID": "posts/spec_processing/Spectra.html",
     "href": "posts/spec_processing/Spectra.html",
     "title": "IRAF: Обработка оптических спектров",
@@ -88,7 +116,7 @@
     "href": "index.html",
     "title": "Posts",
     "section": "",
-    "text": "astronomy\n\n\niraf\n\n\nunix\n\n\n\n\nНа примере данных с телескопа РТТ-150 обсерватории TUBITAK\n\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\n\nNo matching items"
+    "text": "astronomy\n\n\nstatistics\n\n\nr\n\n\npython\n\n\n\n\nСписок материалов\n\n\n\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nastronomy\n\n\niraf\n\n\nunix\n\n\n\n\nНа примере данных с телескопа РТТ-150 обсерватории TUBITAK\n\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",

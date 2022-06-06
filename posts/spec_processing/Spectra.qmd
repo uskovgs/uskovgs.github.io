@@ -9,7 +9,6 @@ format:
     number-sections: true
 date: "2020-08-18"
 categories: [astronomy, iraf, unix]
-image: "spec_bd+25d.png"
 number-sections: true
 description: "На примере данных с телескопа РТТ-150 обсерватории TUBITAK"
 ---
