@@ -23,7 +23,7 @@ description: "Список материалов"
 # Summer Schools / Workshops
 
 -   [PSU Center for Astrostatistics](https://sites.psu.edu/astrostatistics)
--   [Astrophysics Data Analysis Workshops](https://www.imperial.ac.uk/astrophysics/centre-for-inference-and-cosmology/seminars-and-events/data-analysis-workshops/)
+-   [Astrophysics. Data Analysis Workshops](https://www.imperial.ac.uk/astrophysics/centre-for-inference-and-cosmology/seminars-and-events/data-analysis-workshops/)
 
 
 # Statistics

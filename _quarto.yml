@@ -10,7 +10,8 @@ website:
         href: https://github.com/uskovgs
       - icon: envelope
         href: mailto:uskov.russia@gmail.com
-        
+      - text: "Talks"
+        href: talks.qmd
         
       
       

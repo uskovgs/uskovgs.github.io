@@ -112,6 +112,13 @@
     "text": "2.11 Комбинирование совмещенных спектров\nВ IRAF пакет imred.ccdred команда combine\ncombine input=rgtr//@spec.list output=bd+25d4655.fits"
   },
   {
+    "objectID": "talks.html",
+    "href": "talks.html",
+    "title": "Talks",
+    "section": "",
+    "text": "КМУ 2021\nАстрофизика высоких энергий сегодня и завтра 2021 (HEA-2021)\nКМУ 2022"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Posts",
