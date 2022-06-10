@@ -21,7 +21,7 @@ description: "На примере данных с телескопа РТТ-150 
 makelog
 ```
 
-Создадим папку с названием нашей звезды стандарта и скопируем туда спектры данной звезды и файлы ламп **FeAr** и **Halogen**
+Создадим папку с названием нашей звезды стандарта и скопируем туда спектры данной звезды и файлы ламп **neon** и **flat**
 
 ``` bash
 mkdir BD+25d4655
@@ -30,16 +30,15 @@ cp `cat .log | grep 20200721 | grep '1024 200' | grep BD+25d4655 | awk '{print$3
 
 Создадим списки:
 
-    * спектров звезды spec.list 
-    * спектров лампы **FeAr** fear.list
-    * спектров лампы **Halogen** halogen.list
+    * спектров звезды list.sp 
+    * спектров лампы **FeAr** list.neon
+    * спектров лампы **Halogen** list.flat
 
 ``` bash
-cat .log | grep 100.0 | awk '{print$3}' > spec.list
-cat .log | grep Fe-Ar | awk '{print$3}' > fear.list
-cat .log | grep Halogen | awk '{print$3}' > halogen.list
+cat .log | grep 100.0 | awk '{print$3}' > list.sp
+cat .log | grep Fe-Ar | awk '{print$3}' > list.neon
+cat .log | grep Halogen | awk '{print$3}' > list.flat
 ```
-
 
 # Первичная редукция файлов
 
@@ -56,10 +55,10 @@ cp `cat .log | grep '1024 200' | grep bias | grep 0.0000 | grep -v flat | awk '{
 
 ``` bash
 cd biassp/
-ls *.fit > biassp.list
-gedit biassp.list & # для удаления "плохих" bias из списка
+ls *.fit > list.biassp
+gedit list.biassp & # для удаления "плохих" bias из списка
 ds9 &
-xs `cat biassp.list`
+xs `cat list.biassp`
 ```
 
 Перед тем как делать усреднение нужно исправить ключи в FITS Header к bias, так как у нас не записан правильный **GAIN**. Для этого выполним команду
@@ -72,7 +71,7 @@ xs `cat biassp.list`
 
 ``` bash
 epar zerocombine
-input=@biassp.list
+input=@list.biassp
 output=Biassp2.fits
 combine=median
 ```
@@ -91,16 +90,13 @@ cp Biassp2.fits ../Caldata/
 ../bin/repair_tfosc_andor_keys *.fit
 ```
 
-
-
 ## Вычитание усредненного bias
 
-Вычтем из всх спектров усредненный **bias**
+Вычтем из всех спектров усредненный **bias**
 
 ``` bash
 ../bin/process *.fit | si
 ```
-
 
 ## Усреднение кадров плоского поля
 
@@ -108,8 +104,8 @@ cp Biassp2.fits ../Caldata/
 
 ``` bash
 epar combine
-input=@halogen.list
-output=halogen
+input=@list.flat
+output=flat
 combine=average
 ```
 
@@ -121,8 +117,8 @@ combine=average
 
 ``` bash
 epar combine
-input=@fear.list
-output=fear
+input=@list.neon
+output=neon
 combine=average
 ```
 
@@ -132,9 +128,9 @@ combine=average
 
 ``` bash
 epar response
-calibrat=halogen
-normaliz=halogen
-response=nhalogen
+calibrat=flat
+normaliz=flat
+response=nflat
 ```
 
 Запускаем `:go`
@@ -145,9 +141,9 @@ response=nhalogen
 
 ``` bash
 epar ccdproc
-images=@spec.list
+images=@list.sp
 flatcor=yes
-flat=nhalogen.fits
+flat=nflat.fits
 ```
 
 Запускаем `:go`
@@ -158,7 +154,7 @@ IRAF twodspec.longslit
 
 ``` bash
 epar identify
-images=fear.fits
+images=neon.fits
 section=middle line
 coordli=linelists$idhenear.dat
 cradius=8
@@ -170,13 +166,13 @@ cradius=8
 epar reidentify
 cradius=8
 coordli=linelists$idhenear.dat
-referenc=fear
-images=fear
+referenc=neon
+images=neon
 ```
 
 ``` bash
 epar fitcoords
-images=fear
+images=neon
 ```
 
 Удаляем плохие точки клавишами `d` `p`
@@ -195,9 +191,9 @@ images=fear
 
 ``` bash
 epar transform
-input=@spec.list
-output=tr//@spec.list
-fitnames=fear
+input=@list.sp
+output=tr//@list.sp
+fitnames=neon
 ```
 
 Запускаем `:go`
@@ -216,18 +212,20 @@ IRAF в пакете iki команда alignspectra
 
 ``` bash
 epar alignspec
-images=tr//@spec.list
+images=tr//@list.sp
 refimage=trfosc0254.fit
 prefix=rg
 imreg=[160:670,85:145] # указываем бокс, по которому он будет совмещать спектры для дальнейшего складывания
 ```
+
+> Для БТА лучше использовать \[500:3000,300:700\]
 
 ## Комбинирование совмещенных спектров
 
 В IRAF пакет imred.ccdred команда combine
 
 ``` bash
-combine input=rgtr//@spec.list output=bd+25d4655.fits
+combine input=rgtr//@list.sp output=sp.fits
 ```
 
 # Экстракция спектра звезды
@@ -235,7 +233,7 @@ combine input=rgtr//@spec.list output=bd+25d4655.fits
 В IRAF пакет twodspec.apextract команда apall
 
 ``` bash
-apall input=bd+25d4655.fits output=bd+25d4655_end.fits
+apall input=sp.fits output=sp.ms.fits
 ```
 
 Клавиши управления
@@ -261,7 +259,7 @@ apall input=bd+25d4655.fits output=bd+25d4655_end.fits
 
 ``` bash
 epar standard
-input=bd+25d4655_end.fits 
+input=sp.ms.fits 
 output=std.fits 
 star=mbd25d4655
 caldir=./
@@ -279,7 +277,27 @@ sensitiv=sens
 
 ``` bash
 epar calibrate 
-input=bd+25d4655_end.fits 
-output=bd_flux.fits
+input=sp.ms.fits 
+output=sp.ms.c.fits
 sensiti=sens.0001.fits
 ```
+
+# Обозначение
+
+-   flat -- кадр плоского поля
+
+-   nflat -- нормированный кадр плоского поля
+
+-   neon - линии
+
+-   sp - двумерный итоговый спектр, поправленный за оптические искажения и космики.
+
+-   sp.ms.fits -- извлеченный одномерный спектр
+
+-   sp.ms.c.fits --- калиброванный по потоку одномерный спектр
+
+-   \@list.sp --- список спектров
+
+-   \@list.neon --- список кадров линейчатых ламп
+
+-   \@list.flat --- список кадров плоских ламп
