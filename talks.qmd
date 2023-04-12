@@ -7,5 +7,6 @@ format:
 -   [КМУ 2021](https://uskovgs.github.io/KMU-2021)
 -   [Астрофизика высоких энергий сегодня и завтра 2021 (HEA-2021)](https://uskovgs.github.io/HEA-2021)
 -   [КМУ 2022](https://github.com/uskovgs/KMU-2022)
+-   [КМУ 2023](https://github.com/uskovgs/KMU-2023)
 
 

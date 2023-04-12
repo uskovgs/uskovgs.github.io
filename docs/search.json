@@ -116,14 +116,14 @@
     "href": "talks.html",
     "title": "Talks",
     "section": "",
-    "text": "КМУ 2021\nАстрофизика высоких энергий сегодня и завтра 2021 (HEA-2021)\nКМУ 2022"
+    "text": "КМУ 2021\nАстрофизика высоких энергий сегодня и завтра 2021 (HEA-2021)\nКМУ 2022\nКМУ 2023"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Posts",
     "section": "",
-    "text": "astronomy\n\n\nstatistics\n\n\nr\n\n\npython\n\n\n\n\nСписок материалов\n\n\n\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nastronomy\n\n\niraf\n\n\nunix\n\n\n\n\nНа примере данных с телескопа РТТ-150 обсерватории TUBITAK\n\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\n\nNo matching items"
+    "text": "RTT-150\n\n\n\n\n\n\n\nastronomy\n\n\n\n\nshort handbook\n\n\n\n\n\n\nJun 20, 2022\n\n\n\n\n\n\n  \n\n\n\n\nПолезные ссылки\n\n\n\n\n\n\n\nastronomy\n\n\nstatistics\n\n\nr\n\n\npython\n\n\n\n\nСписок материалов\n\n\n\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n  \n\n\n\n\nIRAF: Обработка оптических спектров\n\n\n\n\n\n\n\nastronomy\n\n\niraf\n\n\nunix\n\n\n\n\nНа примере данных с телескопа РТТ-150 обсерватории TUBITAK\n\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -131,5 +131,26 @@
     "title": "About",
     "section": "",
     "text": "About this blog"
+  },
+  {
+    "objectID": "posts/rtt150_observations/rtt150_observations.html",
+    "href": "posts/rtt150_observations/rtt150_observations.html",
+    "title": "RTT-150",
+    "section": "",
+    "text": "AllSky Camera"
+  },
+  {
+    "objectID": "posts/rtt150_observations/rtt150_observations.html#links",
+    "href": "posts/rtt150_observations/rtt150_observations.html#links",
+    "title": "RTT-150",
+    "section": "",
+    "text": "AllSky Camera"
+  },
+  {
+    "objectID": "posts/rtt150_observations/rtt150_observations.html#наведение-телескопа-на-объект",
+    "href": "posts/rtt150_observations/rtt150_observations.html#наведение-телескопа-на-объект",
+    "title": "RTT-150",
+    "section": "2.1 Наведение телескопа на объект",
+    "text": "2.1 Наведение телескопа на объект\n\nt_go hh mm ss dd mm ss\nПосле того как телескоп приехал нужно выставить\nybeg 800\nysize 400\nbin 1\n\n\nG8 slit100 halogen 0.3 5\nG7 0.6s halogen"
   }
 ]
