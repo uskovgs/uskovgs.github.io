@@ -32,14 +32,14 @@
     "href": "posts/spec_processing/Spectra.html",
     "title": "IRAF: Обработка оптических спектров",
     "section": "",
-    "text": "Создание краткой сводки по всем файлам\nmakelog\nСоздадим папку с названием нашей звезды стандарта и скопируем туда спектры данной звезды и файлы ламп neon и flat\nmkdir BD+25d4655\ncp `cat .log | grep 20200721 | grep '1024 200' | grep BD+25d4655 | awk '{print$3}'` BD+25d4655/\nСоздадим списки:\n* спектров звезды list.sp \n* спектров лампы **FeAr** list.neon\n* спектров лампы **Halogen** list.flat\ncat .log | grep 100.0 | awk '{print$3}' > list.sp\ncat .log | grep Fe-Ar | awk '{print$3}' > list.neon\ncat .log | grep Halogen | awk '{print$3}' > list.flat"
+    "text": "Создание краткой сводки по всем файлам\nmakelog\nСоздадим папку с названием нашей звезды стандарта и скопируем туда спектры данной звезды и файлы ламп neon и flat\nmkdir BD+25d4655\ncp `cat .log | grep 20200721 | grep '1024 200' | grep BD+25d4655 | awk '{print$3}'` BD+25d4655/\nСоздадим списки:\n* спектров звезды list.sp \n* спектров лампы **FeAr** list.neon\n* спектров лампы **Halogen** list.flat\ncat .log | grep 100.0 | awk '{print$3}' &gt; list.sp\ncat .log | grep Fe-Ar | awk '{print$3}' &gt; list.neon\ncat .log | grep Halogen | awk '{print$3}' &gt; list.flat"
   },
   {
     "objectID": "posts/spec_processing/Spectra.html#усреднение-bias",
     "href": "posts/spec_processing/Spectra.html#усреднение-bias",
     "title": "IRAF: Обработка оптических спектров",
     "section": "2.1 Усреднение bias",
-    "text": "2.1 Усреднение bias\nСоздадим папку со спектральными bias и скопируем их туда\nmkdir biassp\ncp `cat .log | grep '1024 200' | grep bias | grep 0.0000 | grep -v flat | awk '{print$3}'` biassp/\nПроверим bias перед усреднением.\ncd biassp/\nls *.fit > list.biassp\ngedit list.biassp & # для удаления \"плохих\" bias из списка\nds9 &\nxs `cat list.biassp`\nПеред тем как делать усреднение нужно исправить ключи в FITS Header к bias, так как у нас не записан правильный GAIN. Для этого выполним команду\n../bin/repair_tfosc_andor_keys *.fit\nУсредним файлы bias по медиане. Для этого небходимо в IRAF открыть noao.imred.ccdred\u0012\u0012\nepar zerocombine\ninput=@list.biassp\noutput=Biassp2.fits\ncombine=median\nВвести команду:go\nСкопируем Biassp2.fits в папку ../Caldata\ncp Biassp2.fits ../Caldata/\nПерейдем в папку BD+25d4655 и исправвим ключи\n../bin/repair_tfosc_andor_keys *.fit"
+    "text": "2.1 Усреднение bias\nСоздадим папку со спектральными bias и скопируем их туда\nmkdir biassp\ncp `cat .log | grep '1024 200' | grep bias | grep 0.0000 | grep -v flat | awk '{print$3}'` biassp/\nПроверим bias перед усреднением.\ncd biassp/\nls *.fit &gt; list.biassp\ngedit list.biassp & # для удаления \"плохих\" bias из списка\nds9 &\nxs `cat list.biassp`\nПеред тем как делать усреднение нужно исправить ключи в FITS Header к bias, так как у нас не записан правильный GAIN. Для этого выполним команду\n../bin/repair_tfosc_andor_keys *.fit\nУсредним файлы bias по медиане. Для этого небходимо в IRAF открыть noao.imred.ccdred\u0012\u0012\nepar zerocombine\ninput=@list.biassp\noutput=Biassp2.fits\ncombine=median\nВвести команду:go\nСкопируем Biassp2.fits в папку ../Caldata\ncp Biassp2.fits ../Caldata/\nПерейдем в папку BD+25d4655 и исправвим ключи\n../bin/repair_tfosc_andor_keys *.fit"
   },
   {
     "objectID": "posts/spec_processing/Spectra.html#вычитание-усредненного-bias",
@@ -112,27 +112,6 @@
     "text": "2.11 Комбинирование совмещенных спектров\nВ IRAF пакет imred.ccdred команда combine\ncombine input=rgtr//@list.sp output=sp.fits"
   },
   {
-    "objectID": "talks.html",
-    "href": "talks.html",
-    "title": "Talks",
-    "section": "",
-    "text": "КМУ 2021\nАстрофизика высоких энергий сегодня и завтра 2021 (HEA-2021)\nКМУ 2022\nКМУ 2023\nУФ 2023"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Posts",
-    "section": "",
-    "text": "RTT-150\n\n\n\n\n\n\n\nastronomy\n\n\n\n\nshort handbook\n\n\n\n\n\n\nJun 20, 2022\n\n\n\n\n\n\n  \n\n\n\n\nПолезные ссылки\n\n\n\n\n\n\n\nastronomy\n\n\nstatistics\n\n\nr\n\n\npython\n\n\n\n\nСписок материалов\n\n\n\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n  \n\n\n\n\nIRAF: Обработка оптических спектров\n\n\n\n\n\n\n\nastronomy\n\n\niraf\n\n\nunix\n\n\n\n\nНа примере данных с телескопа РТТ-150 обсерватории TUBITAK\n\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this blog"
-  },
-  {
     "objectID": "posts/rtt150_observations/rtt150_observations.html",
     "href": "posts/rtt150_observations/rtt150_observations.html",
     "title": "RTT-150",
@@ -152,5 +131,26 @@
     "title": "RTT-150",
     "section": "2.1 Наведение телескопа на объект",
     "text": "2.1 Наведение телескопа на объект\n\nt_go hh mm ss dd mm ss\nПосле того как телескоп приехал нужно выставить\nybeg 800\nysize 400\nbin 1\n\n\nG8 slit100 halogen 0.3 5\nG7 0.6s halogen"
+  },
+  {
+    "objectID": "talks.html",
+    "href": "talks.html",
+    "title": "Talks",
+    "section": "",
+    "text": "КМУ 2021\nАстрофизика высоких энергий сегодня и завтра 2021 (HEA-2021)\nКМУ 2022\nКМУ 2023\nУФ 2023\nВАК 2024"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Posts",
+    "section": "",
+    "text": "RTT-150\n\n\n\n\n\n\n\nastronomy\n\n\n\n\nshort handbook\n\n\n\n\n\n\nJun 20, 2022\n\n\n\n\n\n\n  \n\n\n\n\nПолезные ссылки\n\n\n\n\n\n\n\nastronomy\n\n\nstatistics\n\n\nr\n\n\npython\n\n\n\n\nСписок материалов\n\n\n\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n  \n\n\n\n\nIRAF: Обработка оптических спектров\n\n\n\n\n\n\n\nastronomy\n\n\niraf\n\n\nunix\n\n\n\n\nНа примере данных с телескопа РТТ-150 обсерватории TUBITAK\n\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
   }
 ]
