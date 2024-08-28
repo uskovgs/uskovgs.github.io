@@ -9,5 +9,6 @@ format:
 -   [КМУ 2022](https://github.com/uskovgs/KMU-2022)
 -   [КМУ 2023](https://uskovgs.github.io/KMU-2023)
 -   [УФ 2023](https://uskovgs.github.io/UV-2023)
+-   [ВАК 2024](https://uskovgs.github.io/VAK-2024)
 
 
