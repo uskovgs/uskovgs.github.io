@@ -8,7 +8,7 @@ format:
     smooth-scroll: true
     number-sections: true
 date: "2020-08-18"
-date-modified: date-modified
+date-modified: last-modified
 categories: [astronomy, iraf, unix]
 number-sections: true
 description: "Using Data from the RTT-150 Telescope at TUBITAK Observatory"
