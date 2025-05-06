@@ -1,0 +1,62 @@
+---
+title: "Publications"
+date-modified: last-modified
+format:
+  html
+---
+
+# 2025
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2504.13658) 
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2025arXiv250413658U/abstract) 
+SRGAJ230631.0+155633: an extremely X-ray luminous, heavily obscured, radio-loud quasar at z=0.44 discovered by SRG/ART-XC
+
+
+
+# 2024
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2505.00109)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2024AstL...50..279U/abstract)
+New Active Galactic Nuclei Detected by the ART-XC and eROSITA Telescopes during the First Five SRG All-Sky X-ray Surveys. Part 2
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2405.09184)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2024A%26A...687A.183S/abstract)
+SRG/ART-XC all-sky X-ray survey: Catalog of sources detected during the first five surveys
+
+# 2023
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2403.17865)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2023AstL...49..621U/abstract)
+X-ray Properties of the Luminous Quasar PG 1634+706 at z=1.337 from SRG and XMM-Newton Data
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2403.18625)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2023AstL...49..599Z/abstract)
+Optical Identification and Spectroscopic Redshift Measurements of 216 Galaxy Clusters from the SRG/eROSITA All-Sky Survey
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2306.08646)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2023AstL...49...25U/abstract)
+New Active Galactic Nuclei Detected by the ART-XC and eROSITA Telescopes during the First Five SRG All-Sky X-ray Surveys 
+
+
+# 2022
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2107.05611)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2022A%26A...661A..39Z/abstract)
+Identification of three cataclysmic variables detected by the ART-XC and eROSITA telescopes on board the SRG during the all-sky X-ray survey
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2208.10963)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2022AstL...48...87U/abstract)
+New Active Galactic Nuclei Detected by the ART-XC and eROSITA Telescopes Onboard the SRG Observatory during an All-Sky X-ray Survey
+
+- [{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2022AstL...48...69K/abstract)
+Search for Distant and X-ray Luminous Quasars during the SRG/eROSITA Sky Survey (the DaLeQo Program). The First Results from Observations at the BTA Telescope
+
+# 2021
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2108.02449)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2021MNRAS.508.3820S/abstract)
+First tidal disruption events discovered by SRG/eROSITA: X-ray/optical properties and X-ray luminosity function at z < 0.6
+
+- [{{< ai arxiv >}}](https://arxiv.org/abs/2104.09390)
+[{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2021AstL...47...71Z/abstract)
+Optical Identification of Candidates for Active Galactic Nuclei Detected by the Mikhail Pavlinsky ART-XC Telescope Onboard the SRG Observatory during an All-Sky X-ray Survey

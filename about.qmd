@@ -2,11 +2,32 @@
 title: "About"
 image: profile.jpg
 about:
-  template: jolla
+  template: solana
   links:
     - icon: github
       text: Github
       href: https://github.com/uskovgs
+    - icon: envelope
+      text: Email
+      href: mailto:uskov.russia@gmail.com
 ---
 
-About this blog
+## Bio
+
+## Education
+
+**IKI RAS (Space Research Institute of the Russian Academy of Sciences)** \| Moscow, Russia
+
+August 2019 - September 2023
+
+**Kazan Federal University** \| Kazan, Russia
+
+September 2013 - June 2019
+
+## Experience
+
+IKI RAS | Junior research assistant | - Present
+
+IKI RAS | Engineer | 
+
+

@@ -1,5 +1,5 @@
 ---
-title: "Полезные ссылки"
+title: "Useful Links & Materials"
 format:
   html:
     toc: true
@@ -7,9 +7,10 @@ format:
     toc-depth: 2
     smooth-scroll: true
 date: "2022-06-07"
+date-modified: last-modified
 categories: [astronomy, statistics, r, python]
 number-sections: false
-description: "Список материалов"
+description: "Things Worth Sharing"
 ---
 
 # Astronomy/astrostat
@@ -46,12 +47,12 @@ description: "Список материалов"
 -   [Mastering Software Development in R](https://bookdown.org/rdpeng/RProgDA/)
 -   [STAT 545](https://stat545.com/) by Jenny Bryan
 -   [Введение в язык программирования R](https://textbook.rintro.ru/)
--   [Telegram Группа пользователей языка R](https://t.me/rlang_ru) 
+-   [Telegram Группа пользователей языка R](https://t.me/rlang_ru)
 
 # Python
 
 -   [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
--   [Python for Data Analysis](https://wesmckinney.com/book/) by Wes McKinney (created **pandas**)
+-   [Python for Data Analysis](https://wesmckinney.com/book/) by Wes McKinney (**pandas** creator)
 -   [The Good Research Code Handbook](https://goodresearch.dev/)
 
 
@@ -61,16 +62,20 @@ description: "Список материалов"
 
 # Other
 
-## Stories
-
--   [Using AWK and R to parse 25tb](https://livefreeordichotomize.com/2019/06/04/using_awk_and_r_to_parse_25tb)
-
 ## Regular expressions
 
 -   [RegexOne. Learn Regular Expressions with simple, interactive exercises](https://regexone.com/)
 -   [regex101](https://regex101.com)
 
-## Ah
+## Stories
 
--   [February 2022: "Top 40" New CRAN Packages](https://rviews.rstudio.com/2022/03/28/february-2022-top-40-new-cran-packages) my package [`panstarrs`](https://cran.r-project.org/web/packages/panstarrs/index.html).
+-   [Using AWK and R to parse 25tb](https://livefreeordichotomize.com/2019/06/04/using_awk_and_r_to_parse_25tb)
+
+- [`panstarrs`](https://cran.r-project.org/web/packages/panstarrs/index.html) — my R package, featured in [February 2022: "Top 40" New CRAN Packages](https://rviews.rstudio.com/2022/03/28/february-2022-top-40-new-cran-packages) by R Views
+
+
+
+
+
+
 

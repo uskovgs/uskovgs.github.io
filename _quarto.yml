@@ -3,24 +3,29 @@ project:
   output-dir: docs
 
 website:
-  title: "Posts"
+  title: "Grigory Uskov"
   navbar:
+    left: 
+      - text: "Posts"
+        href: index.qmd
+      - text: "Publications"
+        href: publications.qmd
+      - text: "Talks"
+        href: talks.qmd
     right:
+      - text: "{{< ai orcid >}}"
+        href: https://orcid.org/0000-0002-0274-1350
       - icon: github
         href: https://github.com/uskovgs
       - icon: envelope
         href: mailto:uskov.russia@gmail.com
-      - text: "Talks"
-        href: talks.qmd
         
       
       
 format:
   html:
     theme: 
-      light: flatly
-      dark: darkly
+      light: cosmo
+      dark: [cosmo, theme_dark.scss]
     css: styles.css
-
-
 
