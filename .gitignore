@@ -48,4 +48,3 @@ vignettes/*.pdf
 .Renviron
 
 /.quarto/
-docs/

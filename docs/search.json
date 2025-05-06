@@ -1,0 +1,149 @@
+[
+  {
+    "objectID": "blog_posts.html",
+    "href": "blog_posts.html",
+    "title": "Grigory Uskov",
+    "section": "",
+    "text": "Useful Links & Materials\n\n\n\nastronomy\n\nstatistics\n\nr\n\npython\n\n\n\nThings Worth Sharing\n\n\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\nIRAF: Optical Spectrum Processing\n\n\n\nastronomy\n\niraf\n\nunix\n\n\n\nUsing Data from the RTT-150 Telescope at TUBITAK Observatory\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "2025\n\n  SRGAJ230631.0+155633: an extremely X-ray luminous, heavily obscured, radio-loud quasar at z=0.44 discovered by SRG/ART-XC\n\n\n\n2024\n\n  New Active Galactic Nuclei Detected by the ART-XC and eROSITA Telescopes during the First Five SRG All-Sky X-ray Surveys. Part 2\n  SRG/ART-XC all-sky X-ray survey: Catalog of sources detected during the first five surveys\n\n\n\n2023\n\n  X-ray Properties of the Luminous Quasar PG 1634+706 at z=1.337 from SRG and XMM-Newton Data\n  Optical Identification and Spectroscopic Redshift Measurements of 216 Galaxy Clusters from the SRG/eROSITA All-Sky Survey\n  New Active Galactic Nuclei Detected by the ART-XC and eROSITA Telescopes during the First Five SRG All-Sky X-ray Surveys\n\n\n\n2022\n\n  Identification of three cataclysmic variables detected by the ART-XC and eROSITA telescopes on board the SRG during the all-sky X-ray survey\n  New Active Galactic Nuclei Detected by the ART-XC and eROSITA Telescopes Onboard the SRG Observatory during an All-Sky X-ray Survey\n Search for Distant and X-ray Luminous Quasars during the SRG/eROSITA Sky Survey (the DaLeQo Program). The First Results from Observations at the BTA Telescope\n\n\n\n2021\n\n  First tidal disruption events discovered by SRG/eROSITA: X-ray/optical properties and X-ray luminosity function at z &lt; 0.6\n  Optical Identification of Candidates for Active Galactic Nuclei Detected by the Mikhail Pavlinsky ART-XC Telescope Onboard the SRG Observatory during an All-Sky X-ray Survey"
+  },
+  {
+    "objectID": "talks.html",
+    "href": "talks.html",
+    "title": "Talks",
+    "section": "",
+    "text": "VAK 2024\nUV 2023\nKMU 2023\nKMU 2022\nInternational conference High energy astrophysics today and tomorrow - 2021 (HEA-2021)\nKMU 2021"
+  },
+  {
+    "objectID": "posts/useful_links/useful_links.html",
+    "href": "posts/useful_links/useful_links.html",
+    "title": "Useful Links & Materials",
+    "section": "",
+    "text": "Computational Astronomy\nBayesian Models for Astrophysical Data: Using R, JAGS, Python, and Stan\nModern Statistical Methods for Astronomy: With R Applications\nExtragalactic Astronomy and Cosmology"
+  },
+  {
+    "objectID": "posts/useful_links/useful_links.html#regular-expressions",
+    "href": "posts/useful_links/useful_links.html#regular-expressions",
+    "title": "Useful Links & Materials",
+    "section": "Regular expressions",
+    "text": "Regular expressions\n\nRegexOne. Learn Regular Expressions with simple, interactive exercises\nregex101"
+  },
+  {
+    "objectID": "posts/useful_links/useful_links.html#stories",
+    "href": "posts/useful_links/useful_links.html#stories",
+    "title": "Useful Links & Materials",
+    "section": "Stories",
+    "text": "Stories\n\nUsing AWK and R to parse 25tb\npanstarrs — my R package, featured in February 2022: “Top 40” New CRAN Packages by R Views"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html",
+    "href": "posts/spec_processing/Spectra.html",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "",
+    "text": "Create a quick summary of all files:\nmakelog\nCreate a folder named after our standard star and copy into it the star spectra, neon lamp, and flat lamp files:\nmkdir BD+25d4655\ncp `cat .log | grep 20200721 | grep '1024 200' | grep BD+25d4655 | awk '{print$3}'` BD+25d4655/\nCreate the following lists:\n\nStar spectra: list.sp\nFeAr lamp spectra: FeAr list.neon\nHalogen lamp spectra: Halogen list.flat\n\ncat .log | grep 100.0 | awk '{print$3}' &gt; list.sp\ncat .log | grep Fe-Ar | awk '{print$3}' &gt; list.neon\ncat .log | grep Halogen | awk '{print$3}' &gt; list.flat"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#bias-averaging",
+    "href": "posts/spec_processing/Spectra.html#bias-averaging",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.1 Bias Averaging",
+    "text": "2.1 Bias Averaging\nCreate a folder for spectral bias files and copy them in:\nmkdir biassp\ncp `cat .log | grep '1024 200' | grep bias | grep 0.0000 | grep -v flat | awk '{print$3}'` biassp/\nCheck the bias frames before combining:\ncd biassp/\nls *.fit &gt; list.biassp\ngedit list.biassp & # optional to remove \"bad\" bias frames\nds9 &\nxs `cat list.biassp`\nBefore averaging, we must fix FITS header keys because the GAIN value is incorrect. Run:\n../bin/repair_tfosc_andor_keys *.fit\nCombine bias frames using median in IRAF (noao.imred.ccdred):\nepar zerocombine\ninput=@list.biassp\noutput=Biassp2.fits\ncombine=median\nRun:go, then copy the result:\nСкопируем Biassp2.fits в папку ../Caldata\ncp Biassp2.fits ../Caldata/\nGo to BD+25d4655 and fix header keys again:\n../bin/repair_tfosc_andor_keys *.fit"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#subtracting-the-averaged-bias",
+    "href": "posts/spec_processing/Spectra.html#subtracting-the-averaged-bias",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.2 Subtracting the Averaged Bias",
+    "text": "2.2 Subtracting the Averaged Bias\nSubtract the averaged bias from all spectra:\n../bin/process *.fit | si"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#averaging-flat-field-frames",
+    "href": "posts/spec_processing/Spectra.html#averaging-flat-field-frames",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.3 Averaging Flat Field Frames",
+    "text": "2.3 Averaging Flat Field Frames\nIn IRAF, open noao.imred.ccdred:\nepar combine\ninput=@list.flat\noutput=flat\ncombine=average\nRun :go"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#averaging-fear-lamp-spectra",
+    "href": "posts/spec_processing/Spectra.html#averaging-fear-lamp-spectra",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.4 Averaging FeAr Lamp Spectra",
+    "text": "2.4 Averaging FeAr Lamp Spectra\nIn IRAF, open noao.imred.ccdred:\nepar combine\ninput=@list.neon\noutput=neon\ncombine=average"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#creating-the-response-function",
+    "href": "posts/spec_processing/Spectra.html#creating-the-response-function",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.5 Creating the Response Function",
+    "text": "2.5 Creating the Response Function\nIn IRAF, open twodspec.longslit:\nepar response\ncalibrat=flat\nnormaliz=flat\nresponse=nflat\nRun :go"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#dividing-star-spectra-by-flat-field",
+    "href": "posts/spec_processing/Spectra.html#dividing-star-spectra-by-flat-field",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.6 Dividing Star Spectra by Flat Field",
+    "text": "2.6 Dividing Star Spectra by Flat Field\nIn IRAF, open imred.ccdred:\nepar ccdproc\nimages=@list.sp\nflatcor=yes\nflat=nflat.fits\nRun :go"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#wavelength-calibration",
+    "href": "posts/spec_processing/Spectra.html#wavelength-calibration",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.7 Wavelength Calibration",
+    "text": "2.7 Wavelength Calibration\nIn IRAF, open twodspec.longslit\nepar identify\nimages=neon.fits\nsection=middle line\ncoordli=linelists$idhenear.dat\ncradius=8\n\nepar reidentify\ncradius=8\ncoordli=linelists$idhenear.dat\nreferenc=neon\nimages=neon\nepar fitcoords\nimages=neon\nRemove bad points with d p\ny y r\ny``r``r\n\nEverything fits well."
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#applying-wavelength-calibration-to-star-spectra",
+    "href": "posts/spec_processing/Spectra.html#applying-wavelength-calibration-to-star-spectra",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.8 Applying Wavelength Calibration to Star Spectra",
+    "text": "2.8 Applying Wavelength Calibration to Star Spectra\nTransform the spectra using the solution from fitcoords:\nepar transform\ninput=@list.sp\noutput=tr//@list.sp\nfitnames=neon\nRun :go\n\nNote: in the database folder, files fcfear, idfear are created even though fitnames=fear"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#cosmic-ray-removal",
+    "href": "posts/spec_processing/Spectra.html#cosmic-ray-removal",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.9 Cosmic Ray Removal",
+    "text": "2.9 Cosmic Ray Removal\n ~uskov/runTmp/do_cleancrspec trfosc025*.fit"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#aligning-star-spectra-for-stacking",
+    "href": "posts/spec_processing/Spectra.html#aligning-star-spectra-for-stacking",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.10 Aligning Star Spectra for Stacking",
+    "text": "2.10 Aligning Star Spectra for Stacking\nIn IRAF package iki, use the alignspectra command:\nepar alignspec\nimages=tr//@list.sp\nrefimage=trfosc0254.fit\nprefix=rg\nimreg=[160:670,85:145] # region used for alignment\n\nFor BTA data, a better region is [500:3000, 300:700]"
+  },
+  {
+    "objectID": "posts/spec_processing/Spectra.html#combining-aligned-spectra",
+    "href": "posts/spec_processing/Spectra.html#combining-aligned-spectra",
+    "title": "IRAF: Optical Spectrum Processing",
+    "section": "2.11 Combining Aligned Spectra",
+    "text": "2.11 Combining Aligned Spectra\nIn IRAF imred.ccdred:\ncombine input=rgtr//@list.sp output=sp.fits"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Grigory Uskov",
+    "section": "",
+    "text": "Useful Links & Materials\n\n\n\nastronomy\n\nstatistics\n\nr\n\npython\n\n\n\nThings Worth Sharing\n\n\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\nIRAF: Optical Spectrum Processing\n\n\n\nastronomy\n\niraf\n\nunix\n\n\n\nUsing Data from the RTT-150 Telescope at TUBITAK Observatory\n\n\n\n\n\nAug 18, 2020\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "Education",
+    "text": "Education\nIKI RAS (Space Research Institute of the Russian Academy of Sciences) | Moscow, Russia\nAugust 2019 - September 2023\nKazan Federal University | Kazan, Russia\nSeptember 2013 - June 2019"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About",
+    "section": "Experience",
+    "text": "Experience\nIKI RAS | Junior research assistant | - Present\nIKI RAS | Engineer |"
+  }
+]

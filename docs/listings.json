@@ -1,0 +1,16 @@
+[
+  {
+    "listing": "/blog_posts.html",
+    "items": [
+      "/posts/useful_links/useful_links.html",
+      "/posts/spec_processing/Spectra.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/useful_links/useful_links.html",
+      "/posts/spec_processing/Spectra.html"
+    ]
+  }
+]
