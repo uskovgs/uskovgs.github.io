@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-06-07">
-<meta name="description" content="Things Worth Sharing">
+<meta name="dcterms.date" content="2025-05-11">
+<meta name="description" content="SSH-подключение к серверу, ProxyJump, ssh-agent и bash-скрипт для мгновенного логина">
 
-<title>Useful Links &amp; Materials – Grigory Uskov</title>
+<title>Remote workflow (part 1) – Grigory Uskov</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -300,17 +335,15 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Useful Links &amp; Materials</h1>
+      <h1 class="title">Remote workflow (part 1)</h1>
                   <div>
         <div class="description">
-          Things Worth Sharing
+          SSH-подключение к серверу, ProxyJump, ssh-agent и bash-скрипт для мгновенного логина
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">astronomy</div>
-                <div class="quarto-category">statistics</div>
-                <div class="quarto-category">r</div>
-                <div class="quarto-category">python</div>
+                <div class="quarto-category">unix</div>
+                <div class="quarto-category">ru</div>
               </div>
                   </div>
   </div>
@@ -322,14 +355,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 7, 2022</p>
+        <p class="date">May 11, 2025</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">May 11, 2025</p>
+        <p class="date-modified">May 14, 2025</p>
       </div>
     </div>
       
@@ -344,18 +377,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#astronomyastrostat" id="toc-astronomyastrostat" class="nav-link active" data-scroll-target="#astronomyastrostat">Astronomy/astrostat</a></li>
-  <li><a href="#summer-schools-workshops" id="toc-summer-schools-workshops" class="nav-link" data-scroll-target="#summer-schools-workshops">Summer Schools / Workshops</a></li>
-  <li><a href="#statistics" id="toc-statistics" class="nav-link" data-scroll-target="#statistics">Statistics</a></li>
-  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a></li>
-  <li><a href="#r-programming" id="toc-r-programming" class="nav-link" data-scroll-target="#r-programming">R programming</a></li>
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
-  <li><a href="#ds" id="toc-ds" class="nav-link" data-scroll-target="#ds">DS</a></li>
-  <li><a href="#other" id="toc-other" class="nav-link" data-scroll-target="#other">Other</a>
+  <li><a href="#введение" id="toc-введение" class="nav-link active" data-scroll-target="#введение">Введение</a></li>
+  <li><a href="#мотивация" id="toc-мотивация" class="nav-link" data-scroll-target="#мотивация">Мотивация</a></li>
+  <li><a href="#подключение-по-ssh-через-прокси" id="toc-подключение-по-ssh-через-прокси" class="nav-link" data-scroll-target="#подключение-по-ssh-через-прокси">Подключение по SSH через прокси</a>
   <ul class="collapse">
-  <li><a href="#regular-expressions" id="toc-regular-expressions" class="nav-link" data-scroll-target="#regular-expressions">Regular expressions</a></li>
-  <li><a href="#stories" id="toc-stories" class="nav-link" data-scroll-target="#stories">Stories</a></li>
+  <li><a href="#упрощённая-авторизация" id="toc-упрощённая-авторизация" class="nav-link" data-scroll-target="#упрощённая-авторизация">Упрощённая авторизация</a></li>
   </ul></li>
+  <li><a href="#заключение" id="toc-заключение" class="nav-link" data-scroll-target="#заключение">Заключение</a></li>
+  <li><a href="#продолжение" id="toc-продолжение" class="nav-link" data-scroll-target="#продолжение">Продолжение</a></li>
   </ul>
 </nav>
     </div>
@@ -367,82 +396,205 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="astronomyastrostat" class="level1">
-<h1>Astronomy/astrostat</h1>
+<p><a href="../../posts/remote_workflow_part1/rw1.html">English version</a></p>
+<section id="введение" class="level1">
+<h1>Введение</h1>
+<p>Это первая часть руководства по настройке удалённого рабочего процесса. Цель – помочь быстро начать работу на сервере, используя один из удобных и проверенных способов. Мы пройдем путь от выдачи логинов до первого запуска Jupyter Lab, при этом будем опираться только на несколько базовых команд. Предполагается, что вы используете R или Python в качестве языков программирования для анализа данных.</p>
+<p>Инструкция рассчитана на пользователей <strong>macOS</strong>, <strong>Linux</strong> и <strong>Windows WSL</strong>. Всё, что вам нужно, — стандартный терминал и установленный OpenSSH-клиент.</p>
+</section>
+<section id="мотивация" class="level1">
+<h1>Мотивация</h1>
+<p>Работа с данными, в том числе астрономическими, гораздо удобнее на удалённом сервере, чем на локальном компьютере по многим причинам:</p>
 <ul>
-<li><a href="https://github.com/hwborchers/zaRastro">Computational Astronomy</a></li>
-<li><a href="https://www.bayesianmodelsforastrophysicaldata.com/">Bayesian Models for Astrophysical Data: Using R, JAGS, Python, and Stan</a></li>
-<li><a href="https://ned.ipac.caltech.edu/level5/Sept19/Feigelson/paper.pdf">Modern Statistical Methods for Astronomy: With R Applications</a></li>
-<li><a href="https://link.springer.com/book/10.1007/978-3-642-54083-7">Extragalactic Astronomy and Cosmology</a></li>
+<li><p><strong>Мобильность</strong>. Подключайтесь с любого устройства - планшета, ноутбука или телефона.</p></li>
+<li><p><strong>Производительность</strong>. Серверы часто имеют сотни гигабайт ОЗУ, множество ядер и производительные GPU.</p></li>
+<li><p><strong>Большие данные</strong>. Нет необходимости переносить большие файлы на локальную машину.</p></li>
+<li><p><strong>Экономия батареи</strong>. Вычисления выполняются на сервере, а не на вашем ноутбуке, что особенно удобно в дороге.</p></li>
+<li><p><strong>Долгосрочные задачи</strong>. Можно запускать задачи, которые будут работать неделями или месяцами, не беспокоясь, что компьютер придётся выключить.</p></li>
+<li><p><strong>Поддержка</strong>. Сервер обслуживается администратором: бэкапы, обновления, безопасность.</p></li>
 </ul>
 </section>
-<section id="summer-schools-workshops" class="level1">
-<h1>Summer Schools / Workshops</h1>
+<section id="подключение-по-ssh-через-прокси" class="level1">
+<h1>Подключение по SSH через прокси</h1>
+<p>Скорее всего сервер компании будет недоступен напрямую извне в целях безопасности. Обычно доступ к корпоративному серверу организован через VPN или прокси. Здесь мы рассмотрим схему с прокси. Схематично оно выглядит так:</p>
+<div id="fig-ssh" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ssh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="ssh_image.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ssh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Изображение сгенерировано с помощью ChatGPT.
+</figcaption>
+</figure>
+</div>
+<p>Сперва необходимо получить логин и пароль от прокси-сервера и от основного сервера. Попросите их у администратора сервера или у ИТ службы поддержки. Предположим:</p>
 <ul>
-<li><a href="https://sites.psu.edu/astrostatistics">PSU Center for Astrostatistics</a></li>
-<li><a href="https://www.imperial.ac.uk/astrophysics/centre-for-inference-and-cosmology/seminars-and-events/data-analysis-workshops/">Astrophysics. Data Analysis Workshops</a></li>
+<li>Прокси <code>108.177.126.0</code></li>
+<li>Основной сервер <code>11.6.3.10</code></li>
+<li>Пользователь <code>bob</code></li>
 </ul>
+<p>Для подключения к прокси серверу необходимо ввести команду, а затем и пароль:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> bob@108.177.126.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Если всё получилось, то сейчас сессия открыта на прокси.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Используйте команду-проверку <code>hostname</code>, чтобы убедиться, что вы действительно попали на нужный хост</p>
+</div>
+</div>
+</div>
+<p>Теперь мы можем зайти на основной сервер, аналогично вводим команду, а затем пароль:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> bob@11.6.3.10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Теперь вы на основном сервере и готовы к дальнейшей настройке. Чтобы вернуться обратно на прокси, используйте команду <code>exit</code> - она закроет текущую сессию. Можем начинать настраивать рабочее окружение, но сперва сделаем процесс входа на сервер более удобным.</p>
+<section id="упрощённая-авторизация" class="level2">
+<h2 class="anchored" data-anchor-id="упрощённая-авторизация">Упрощённая авторизация</h2>
+<p>Чтобы не вводить пароль от каждого сервера (основного и прокси), настроим автоматический ProxyJump и вход по ключу.</p>
+<section id="автоматический-вход-через-прокси-сервер" class="level3">
+<h3 class="anchored" data-anchor-id="автоматический-вход-через-прокси-сервер">Автоматический вход через прокси-сервер</h3>
+<p>На локальной машине откройте файл <code>~/.ssh/config</code> в любом текстовом редакторе, а если файла нет, то создайте его. Допустим, у нас несколько основных серверов, у которых IP-адреса <code>11.6.3.10</code>, <code>11.6.3.11</code> и т.п., прокси сервер имеет адрес <code>108.177.126.0</code>, а имя пользователя bob. Тогда введем в этот файл:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> 11.6.3.<span class="pp">*</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">User</span> bob</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ProxyJump</span> 108.177.126.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Теперь достаточно ввести:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> 11.6.3.10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>— и подключение пойдёт через прокси. По-прежнему потребуется ввод паролей, поэтому настроим вход по ключу.</p>
 </section>
-<section id="statistics" class="level1">
-<h1>Statistics</h1>
-<ul>
-<li><a href="https://www.statlearning.com">An Introduction to Statistical Learning</a></li>
-<li><a href="https://online.spbu.ru/prosto-o-statistike-s-ispolzovaniem-r/">Просто о статистике (с использованием R)</a></li>
-<li><a href="https://users.aalto.fi/~ave/ROS.pdf">Regression and Other Stories</a> by Andrew Gelman, Jennifer Hill, and Aki Vehtari</li>
-<li><a href="https://bookdown.org/roback/bookdown-BeyondMLR">Beyond Multiple Linear Regression</a></li>
-<li><a href="http://www.stat.columbia.edu/~gelman/book">Bayesian Data Analysis</a> by Andrew Gelman, John Carlin, Hal Stern, David Dunson, Aki Vehtari, and Donald Rubin.</li>
-<li><a href="https://avehtari.github.io/BDA_course_Aalto">Bayesian Data Analysis course</a> at by Aki Vehtari</li>
-</ul>
+<section id="вход-по-ssh-ключу" class="level3">
+<h3 class="anchored" data-anchor-id="вход-по-ssh-ключу">Вход по SSH-ключу</h3>
+<p>Сгенерируем ssh-ключ на локальной машине:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> rsa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+RSA vs Ed25519
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Рекомендуется использовать более современный алгоритм генерации ключа Ed25519, вместо RSA, так как он короче, быстрее генерируется и даёт такую же или более высокую криптостойкость при меньшем размере ключа. Пример:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>RSA же является более совместимым со старыми серверами.</p>
+</div>
+</div>
+</div>
+<p>Жмём <code>Enter</code> для пути по умолчанию. Можно задать короткую passphrase — например 2–3 буквы и цифры - или оставить пустой (не рекомендуется).</p>
+<p>После этого сгенерируется ключ, на который можно посмотреть здесь</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_rsa.pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Теперь необходимо скопировать этот ключ на прокси-сервер и на основной сервер. Воспользуемся командами:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># копируем ssh-ключ на прокси сервер</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> <span class="at">-i</span> ~/.ssh/id_rsa.pub bob@108.177.126.0</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># на основной сервер</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> <span class="at">-i</span> ~/.ssh/id_rsa.pub bob@11.6.3.10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Если всё получилось правильно, то команда</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> 11.6.3.10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>работает с короткой passphrase.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Если вам приходится часто подключаться к серверам, то вы можете воспользоваться командой <code>ssh-add</code>, чтобы он “подкладывал” ssh-ключи утилите <code>ssh</code> без ввода passphrase. Список полезных команд:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># хранит ключ ровно столько, сколько живет сам `ssh-agent`</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># если видите список ключей - агент активен</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> <span class="at">-l</span>   </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># хранит ключ 8 часов</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> <span class="at">-t</span> 8h</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </section>
-<section id="data-visualization" class="level1">
-<h1>Data Visualization</h1>
+<section id="альтернативный-подход" class="level3">
+<h3 class="anchored" data-anchor-id="альтернативный-подход">Альтернативный подход</h3>
+<p>Если вы подключены к офисному Wi-Fi или по корпоративному VPN, то вы скорее всего находитесь внутри сети, поэтому сервера доступны без прокси сервера. Поэтому можно подключаться напрямую к основному серверу, избегая задержек на прокси.</p>
+<p>Предлагается использовать такую конфигурацию ssh конфигов:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/config</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> 11.6.3.<span class="pp">*</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">User</span> bob</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ServerAliveInterval</span> 30</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/config_proxy</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> 11.6.3.<span class="pp">*</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">User</span> bob</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ServerAliveInterval</span> 30</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ProxyJump</span> 108.177.126.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Для быстрого переключения используется bash скрипт, назовем его <code>con</code>. Создадим файл (и папку) <code>~/username/bash_scripts/con</code>, запишем в него:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="va">server</span><span class="op">=</span><span class="va">$1</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="va">with_proxy</span><span class="op">=</span><span class="va">$2</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">"</span><span class="va">$with_proxy</span><span class="st">"</span> <span class="ot">==</span> <span class="st">""</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ssh</span> <span class="at">-Y</span> bob@11.6.3.<span class="va">$server</span> <span class="at">-t</span> <span class="st">"bash"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ssh</span> <span class="at">-Y</span> bob@11.6.3.<span class="va">$server</span> <span class="at">-F</span> ~/.ssh/config_proxy <span class="at">-t</span> <span class="st">"bash"</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>-Y</code> — позволяет открывать X11 окна на локальной машине, <code>-t "bash"</code> — открывает bash оболочку на сервере, если по умолчанию на сервере стоит другая.</p>
+<p>Теперь этот файл нужно сделать исполняемым, чтобы его можно было запускать:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> u+x ~/username/bash_scripts/con</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Добавьте путь к скрипту в переменную <code>PATH</code>, чтобы команда <code>con</code> была видна не только в папке, где лежит этот скрипт. Для этого откройте файл (или создайте, если его нет) <code>~/.bashrc</code> (для macOS это <code>~/.bash_profile</code> или <code>~/.zshrc</code>) и вставьте строку:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$PATH</span><span class="st">:/home/username/bash_scripts/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Теперь используем:</p>
 <ul>
-<li><a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualization</a> by Claus O. Wilke</li>
-<li><a href="https://designing-ggplots.netlify.app">Designing ggplots: making clear figures that communicate</a></li>
+<li>внутри сети</li>
 </ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">con</span> 10 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Вы попадете на машину <code>11.6.3.10</code></p>
+<ul>
+<li>Извне (через прокси):</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">con</span> 10 anysymbol</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Второй аргумент может быть любым символом — он просто сигнализирует скрипту выбрать конфиг config_proxy. Логика упрощает ввод: без аргумента — прямое подключение, с аргументом — через прокси</p>
+<p>Как это выглядит у автора:</p>
+<div id="fig-login" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-login-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="ssh_login.png" id="fig-login" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-login-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
+</figure>
+</div>
 </section>
-<section id="r-programming" class="level1">
-<h1>R programming</h1>
-<ul>
-<li><a href="https://r4ds.had.co.nz/">R for Data Science</a></li>
-<li><a href="https://bookdown.org/rdpeng/RProgDA/">Mastering Software Development in R</a></li>
-<li><a href="https://stat545.com/">STAT 545</a> by Jenny Bryan</li>
-<li><a href="https://textbook.rintro.ru/">Введение в язык программирования R</a></li>
-<li><a href="https://t.me/rlang_ru">Telegram Группа пользователей языка R</a></li>
-</ul>
 </section>
-<section id="python" class="level1">
-<h1>Python</h1>
-<ul>
-<li><a href="https://jakevdp.github.io/PythonDataScienceHandbook/">Python Data Science Handbook</a></li>
-<li><a href="https://wesmckinney.com/book/">Python for Data Analysis</a> by Wes McKinney (<strong>pandas</strong> creator)</li>
-<li><a href="https://goodresearch.dev/">The Good Research Code Handbook</a></li>
-</ul>
 </section>
-<section id="ds" class="level1">
-<h1>DS</h1>
-<ul>
-<li><a href="https://www.rstudio.com/blog/software-development-resources-for-data-scientists">Software Development Resources for Data Scientists</a></li>
-</ul>
+<section id="заключение" class="level1">
+<h1>Заключение</h1>
+<p>Теперь у вас есть базовая настройка для подключения к серверу и удобного управления сессиями. Это позволит сосредоточиться на работе, а не на технических деталях входа. Дальнейшие шаги помогут настроить полноценную среду для разработки и анализа данных.</p>
 </section>
-<section id="other" class="level1">
-<h1>Other</h1>
-<section id="regular-expressions" class="level2">
-<h2 class="anchored" data-anchor-id="regular-expressions">Regular expressions</h2>
-<ul>
-<li><a href="https://regexone.com/">RegexOne. Learn Regular Expressions with simple, interactive exercises</a></li>
-<li><a href="https://regex101.com">regex101</a></li>
-</ul>
-</section>
-<section id="stories" class="level2">
-<h2 class="anchored" data-anchor-id="stories">Stories</h2>
-<ul>
-<li><p><a href="https://livefreeordichotomize.com/2019/06/04/using_awk_and_r_to_parse_25tb">Using AWK and R to parse 25tb</a></p></li>
-<li><p><a href="https://cran.r-project.org/web/packages/panstarrs/index.html"><code>panstarrs</code></a> — my R package, featured in <a href="https://rviews.rstudio.com/2022/03/28/february-2022-top-40-new-cran-packages">February 2022: “Top 40” New CRAN Packages</a> by R Views</p></li>
-</ul>
+<section id="продолжение" class="level1">
+<h1>Продолжение</h1>
+<p>Во второй части будет рассмотрена установка python, R, Jupyter Lab, Coder и настройка удаленного рабочего процесса (workflow).</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

@@ -11,6 +11,7 @@ date-modified: last-modified
 categories: [astronomy, statistics, r, python]
 number-sections: false
 description: "Things Worth Sharing"
+image: useful_links.png
 ---
 
 # Astronomy/astrostat

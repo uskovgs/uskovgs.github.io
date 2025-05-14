@@ -14,6 +14,10 @@ number-sections: true
 description: "Using Data from the RTT-150 Telescope at TUBITAK Observatory"
 ---
 
+[Russian version](iraf_spec_processing_ru.qmd)
+
+
+
 # Getting Started
 
 Create a quick summary of all files:

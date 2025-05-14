@@ -2,15 +2,19 @@
   {
     "listing": "/blog_posts.html",
     "items": [
+      "/posts/remote_workflow_part1/rw1.html",
+      "/posts/remote_workflow_part1/rw1_ru.html",
       "/posts/useful_links/useful_links.html",
-      "/posts/spec_processing/Spectra.html"
+      "/posts/iraf_spec_processing/iraf_spec_processing.html",
+      "/posts/iraf_spec_processing/iraf_spec_processing_ru.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
+      "/posts/remote_workflow_part1/rw1.html",
       "/posts/useful_links/useful_links.html",
-      "/posts/spec_processing/Spectra.html"
+      "/posts/iraf_spec_processing/iraf_spec_processing.html"
     ]
   }
 ]
