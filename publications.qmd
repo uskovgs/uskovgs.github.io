@@ -9,7 +9,10 @@ format:
 
 - [{{< ai arxiv >}}](https://arxiv.org/abs/2504.13658) 
 [{{< ai ads >}}](https://ui.adsabs.harvard.edu/abs/2025arXiv250413658U/abstract) 
-SRGAJ230631.0+155633: an extremely X-ray luminous, heavily obscured, radio-loud quasar at z=0.44 discovered by SRG/ART-XC
+SRGAJ230631.0+155633: an extremely X-ray luminous, heavily obscured, radio-loud quasar at z=0.44 discovered by SRG/ART-XC 
+[[@rasofficial](https://t.me/rasofficial/12807)]
+[[TASS.ru](https://tass.ru/nauka/24159745)]
+[[IKI RAS](https://iki.cosmos.ru/news/teleskop-art-xc-im-m-n-pavlinskogo-snyal-pokrov-s-moschnogo-kvazara)]
 
 
 
